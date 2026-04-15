@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "921101441021",
+    "project_id": "ams-attendance-system-5cc7b",
+    "storage_bucket": "ams-attendance-system-5cc7b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921101441021:android:6efb1f2cf0830520296b94",
+        "android_client_info": {
+          "package_name": "com.example.ams_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_9nyE5xhKz7_EYQWqxg55EEyD2es3fs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
