@@ -45,10 +45,21 @@ class AuthService {
         idToken: googleAuth.idToken,
       );
 
-      final UserCredential result =
-          await _auth.signInWithCredential(credential);
-
-      final User? firebaseUser = result.user;
+      // WORKAROUND: Fix for Pigeon List<Object?> casting bug on web
+      User? firebaseUser;
+      try {
+        final result = await _auth.signInWithCredential(credential);
+        firebaseUser = result.user;
+      } catch (e) {
+        if (e.toString().contains('List<Object?>') &&
+            e.toString().contains('Pigeon')) {
+          // This is the known bug - user IS actually authenticated already
+          // Firebase Auth completed successfully internally even though it threw an error
+          firebaseUser = _auth.currentUser;
+        } else {
+          rethrow;
+        }
+      }
       if (firebaseUser == null) {
         throw Exception('Failed to sign in with Google');
       }
