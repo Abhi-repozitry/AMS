@@ -48,9 +48,16 @@ class FirebaseDatabaseService {
     try {
       QuerySnapshot snapshot = await _db.collection('students').get();
       return snapshot.docs.map((doc) {
+        final data = doc.data();
+        if (data == null || data is! Map<String, dynamic>) {
+          return {
+            'id': doc.id,
+            'error': 'Invalid data format: ${data.runtimeType}'
+          };
+        }
         return {
           'id': doc.id,
-          ...doc.data() as Map<String, dynamic>,
+          ...data,
         };
       }).toList();
     } catch (e) {
@@ -62,9 +69,10 @@ class FirebaseDatabaseService {
   Stream<List<Map<String, dynamic>>> studentsStream() {
     return _db.collection('students').snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
+        final data = doc.data();
         return {
           'id': doc.id,
-          ...doc.data() as Map<String, dynamic>,
+          ...data,
         };
       }).toList();
     });
@@ -81,9 +89,16 @@ class FirebaseDatabaseService {
           .get();
 
       return snapshot.docs.map((doc) {
+        final data = doc.data();
+        if (data == null || data is! Map<String, dynamic>) {
+          return {
+            'id': doc.id,
+            'error': 'Invalid data format: ${data.runtimeType}'
+          };
+        }
         return {
           'id': doc.id,
-          ...doc.data() as Map<String, dynamic>,
+          ...data,
         };
       }).toList();
     } catch (e) {
@@ -132,9 +147,16 @@ class FirebaseDatabaseService {
           .get();
 
       return snapshot.docs.map((doc) {
+        final data = doc.data();
+        if (data == null || data is! Map<String, dynamic>) {
+          return {
+            'id': doc.id,
+            'error': 'Invalid data format: ${data.runtimeType}'
+          };
+        }
         return {
           'id': doc.id,
-          ...doc.data() as Map<String, dynamic>,
+          ...data,
         };
       }).toList();
     } catch (e) {
@@ -155,9 +177,16 @@ class FirebaseDatabaseService {
           .get();
 
       return snapshot.docs.map((doc) {
+        final data = doc.data();
+        if (data == null || data is! Map<String, dynamic>) {
+          return {
+            'id': doc.id,
+            'error': 'Invalid data format: ${data.runtimeType}'
+          };
+        }
         return {
           'id': doc.id,
-          ...doc.data() as Map<String, dynamic>,
+          ...data,
         };
       }).toList();
     } catch (e) {

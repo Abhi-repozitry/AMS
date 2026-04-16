@@ -33,6 +33,31 @@ class SettingsScreen extends StatelessWidget {
             ),
           ]),
           const SizedBox(height: 12),
+          _sectionCard(context: context, title: 'Account', children: [
+            if (app.currentUser != null)
+              ListTile(
+                leading: const Icon(Icons.account_circle_rounded),
+                title: Text(app.currentUser!.name,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w500)),
+                subtitle: Text(app.currentUser!.email,
+                    style: const TextStyle(fontSize: 12)),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              ),
+            const Divider(height: 1),
+            ListTile(
+              leading:
+                  const Icon(Icons.logout_rounded, color: Color(0xFFEF4444)),
+              title: const Text('Sign Out',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFFEF4444))),
+              onTap: () => _showLogoutDialog(context),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            ),
+          ]),
+          const SizedBox(height: 12),
           _sectionCard(context: context, title: 'Data Overview', children: [
             ListTile(
               leading: const Icon(Icons.people_rounded),
@@ -114,6 +139,36 @@ class SettingsScreen extends StatelessWidget {
           ),
           const Divider(height: 1),
           ...children,
+        ],
+      ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text('Sign Out', style: TextStyle(fontSize: 16)),
+        content: const Text('Are you sure you want to sign out?',
+            style: TextStyle(fontSize: 13)),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          FilledButton(
+            style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFFEF4444)),
+            onPressed: () {
+              context.read<AppProvider>().logout();
+              Navigator.pop(ctx);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                    content: Text('✓ Signed out successfully'),
+                    behavior: SnackBarBehavior.floating),
+              );
+            },
+            child: const Text('Sign Out'),
+          ),
         ],
       ),
     );
